@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-2xl text-black dark:text-white font-bold;
+  }
+  h2 {
+    @apply text-xl text-black dark:text-white font-medium;
+  }
+  h3 {
+    @apply text-lg text-black dark:text-white font-medium;
+  }
+  h4 {
+    @apply text-sm text-black dark:text-white font-normal;
+  }
+  a {
+    @apply text-black dark:text-white underline;
+  }
+}
+
+
+@layer components {
+  [data-reach-skip-nav-link]:focus {
+    @apply rounded bg-sky-500;
+  }
+
+  .dark [data-reach-skip-nav-link]:focus {
+    @apply bg-gray-700;
+  }
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
