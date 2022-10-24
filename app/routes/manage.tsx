@@ -10,7 +10,7 @@ import { useLoaderData } from '@remix-run/react'
 import Items from '~/components/items'
 import { getMdxListItems } from '~/utils/mdx.server'
 import { getSeo } from '~/utils/seo'
-import { deleteContent } from '~/model/content.server';
+import { createdContent, deleteContent } from '~/model/content.server';
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
@@ -27,9 +27,21 @@ export const action: ActionFunction = async ({ request }) => {
     // await deleteContent(values["id"]?.toString()!)
   }
 
-   // HANDLE created
-   if (action === "CREATED") {
-    // await deleteContent(values["id"]?.toString()!)
+  // HANDLE created
+  if (action === "CREATED") {
+    await createdContent({
+      contentDirectory: "item",
+      code: "code",
+      published: true,
+      slug: 'robusta199',
+      title: 'robusta',
+      description: 'robusta 100% 1kg',
+      price: 199000,
+      discount: 10,
+      imageUrl: "imageUrl",
+      state: "new"
+     
+    })
   }
   return true;
 }
@@ -37,11 +49,11 @@ export const action: ActionFunction = async ({ request }) => {
 type LoaderData = { items: Awaited<ReturnType<typeof getMdxListItems>> }
 
 const [seoMeta, seoLinks] = getSeo({
-  title: 'Manage',
-  description: 'Manage ',
+  title: 'Manage Robusta Arabica Culi',
+  description: 'Manage Robusta Arabica Culi',
   twitter: {
-    title: 'Manage',
-    description: 'Manage',
+    title: 'Manage Robusta Arabica Culi',
+    description: 'Manage Robusta Arabica Culi',
   },
 })
 
@@ -66,7 +78,7 @@ export const loader: LoaderFunction = async () => {
 
   return json<LoaderData>(
     { items },
-    {  headers: { 'cache-control': 'private, max-age=60', Vary: 'Cookie' }, }
+    { headers: { 'cache-control': 'private, max-age=60', Vary: 'Cookie' }, }
   )
 }
 

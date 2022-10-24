@@ -66,7 +66,7 @@ function App() {
         <SkipNavLink className='bg-gray-700'>Skip to content</SkipNavLink>
         <div className='flex h-full flex-col '>
           <Nav />
-          <div className="divide-y">
+          <div className="divide-y px-80">
             <main className='flex-1 px-6 '>
               <SkipNavContent />
               <Outlet />

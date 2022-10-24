@@ -16,20 +16,20 @@ export default function Items({ items }: ItemsType) {
           <Form method='post' action='/manage'>
             <input className='bg-red-100' type="hidden" value={item.slug} name='slug' />
             <button className='bg-red-100 px-4 text-red-400 mt-2 mr-2 border-2 border-red-500' type="submit" name='action' value='DELETE'>DELETE</button>
-            <button className='bg-blue-100 px-4 text-blue-400 mt-2 border-2 border-blue-500' type="submit" name='action' value='EDIT'>EDIT</button>
+            <button className='bg-blue-100  text-blue-400 mt-2 border-2 border-blue-500' type="submit" name='action' value='EDIT'>EDIT</button>
           </Form>
         </div>
       ))}
       <h1 className='text-left py-4'>
         Create
       </h1>
-      <Form method='post' action='/manage' className='flex flex-col gap-2 border-2 border-teal-50 dark:border-teal-500'>
-        <input className='bg-teal-50 p-2 border border-teal-100' name='slug' placeholder="Slug for seo"/>
-        <input className='bg-teal-50 p-2 border border-teal-100' name='title' placeholder="Title"/>
-        <input className='bg-teal-50 p-2 border border-teal-100' name='description' placeholder="Description"/>
-        <input className='bg-teal-50 p-2 border border-teal-100' name='price' placeholder="Price"/>
-        <input className='bg-teal-50 p-2 border border-teal-100' name='url' placeholder="Url image"/>
-        <button className='bg-teal-400 p-2 text-white' type="submit" name='action' value='CREATED'>Add</button>
+      <Form method='post' action='/manage' className='text-gray-500 gap-1'>
+        <input className='bg-teal-50 p-1 border border-teal-100' name='slug' placeholder="Slug for seo" />
+        <input className='bg-teal-50 p-1 border border-teal-100' name='title' placeholder="Title" />
+        <input className='bg-teal-50 p-1 border border-teal-100' name='description' placeholder="Description" />
+        <input className='bg-teal-50 p-1 border border-teal-100' name='price' placeholder="Price" />
+        <input className='bg-teal-50 p-1 border border-teal-100' name='url' placeholder="Url image" />
+        <button className='bg-teal-100 border-2 border-teal-500 text-teal-400  mt-2 px-4' type="submit" name='action' value='CREATED'>Add</button>
       </Form>
     </div>
   )

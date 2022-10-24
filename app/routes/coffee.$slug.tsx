@@ -43,7 +43,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   const slug = params.slug
   invariant(typeof slug === 'string', 'Slug should be a string, and defined')
 
-  const mdxPage = await getMdxPage({ contentDirectory: 'blog', slug })
+  const mdxPage = await getMdxPage({ contentDirectory: 'item', slug })
 
   if (!mdxPage) {
     throw json(null, { status: 404 })
@@ -54,7 +54,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   })
 }
 
-export default function Blog() {
+export default function Coffee() {
   const data = useLoaderData<MdxComponent>()
 
   const Component = React.useMemo(() => getMDXComponent(data.code), [data])
