@@ -47,9 +47,10 @@ async function compileMdxPages(pages: Awaited<ReturnType<typeof downloadMdx>>) {
         files,
         slug,
       })
-
+      
       if (!compiledPage) {
-        await deleteContent(slug)
+        // https://sqliteviewer.flowsoft7.com
+        // await deleteContent(slug)
         return null
       }
 
@@ -110,13 +111,14 @@ export async function getMdxListItems({
     getMdxCount(contentDirectory),
     requiresUpdate(contentDirectory),
   ])
-
-  if (count === 0) {
+  console.log(`🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳  ${JSON.stringify([count, pagesToUpdates])} count, pagesToUpdates`)
+  // if (count === 0) {
     await populateMdx(contentDirectory)
-  }
-  if (pagesToUpdates && pagesToUpdates.length > 0) {
-    await updateMdx(pagesToUpdates, contentDirectory)
-  }
+  // }
+  // if (pagesToUpdates && pagesToUpdates.length > 0) {
+  //   await updateMdx(pagesToUpdates, contentDirectory)
+  // }
+
   return getContentList()
 }
 
@@ -153,24 +155,32 @@ export async function getMdxPage({
   slug: string
   contentDirectory: string
 }): ReturnType<typeof getContent> {
-  const data = await getContent(slug)
 
+ try {
+  const data = await getContent(slug)
+  console.log(`🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳  ${JSON.stringify(data)}`)
+  
   if (data && !data.requiresUpdate) {
     return data
   }
-
-  const pages = await downloadMdx([{ slug }], contentDirectory)
-  const [compiledPage] = await compileMdxPages(pages)
-
+ } catch (error) {
+  console.error(`🛑 Error getContent ${slug} ${error}`)
+ }
+ 
+  try {
+    const pages = await downloadMdx([{ slug }], contentDirectory)
+    console.log(`🛠 pages => ${JSON.stringify(pages)}`)
+    const [compiledPage] = await compileMdxPages(pages)
+    console.log(`🛠 compiledPage  ${compiledPage}`)
   if (!compiledPage) {
-    console.error(`Page ${slug} could not be compiled`)
+    console.error(`🛑 Page ${slug}  fnc downloadMdx compileMdxPages`)
     return null
   }
 
   if (!compiledPage.frontmatter.published) {
     return null
   }
-
+  console.log(`🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 ${JSON.stringify(compiledPage)}`)
   return {
     code: compiledPage.code,
     contentDirectory,
@@ -184,5 +194,9 @@ export async function getMdxPage({
     discount: compiledPage.frontmatter.discount ?? 0,
     imageUrl: compiledPage.frontmatter.imageUrl ?? '',
     state: compiledPage.frontmatter.state ?? 'none'
+  }
+  } catch (error) {
+    console.error(`🛑 Page downloadMdx -> compileMdxPages error  ${slug}`)
+    return null
   }
 }

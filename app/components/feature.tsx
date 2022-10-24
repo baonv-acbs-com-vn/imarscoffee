@@ -5,7 +5,7 @@ import * as React from 'react'
 
 export default function Feature() {
   return (
-    <div className='mx-auto flex  max-w-4xl items-center justify-between py-20 '>
+    <div className='mx-auto flex  max-w-5xl items-center justify-between py-20 '>
       <div className='flex items-center space-x-2'>
         <h1>
           H

@@ -14,7 +14,7 @@ export function preloadFooterSvg() {
 export default function Footer() {
   return (
     <footer >
-      <div className='mx-auto  max-w-4xl flex items-start justify-between py-20 '>
+      <div className='mx-auto  max-w-5xl flex items-start justify-between py-20 '>
         <div className='flex space-x-2'>
           <div>
             <h2 className='pb-2'> iMars_</h2>

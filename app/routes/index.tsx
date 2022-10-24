@@ -34,7 +34,7 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 }
 
 export const loader: LoaderFunction = async () => {
-  const _coffeeList = await getMdxListItems({ contentDirectory: 'blog' })
+  const _coffeeList = await getMdxListItems({ contentDirectory: 'item' })
 
   return json<LoaderData>(
     { coffeeList: _coffeeList.slice(0, 10) },
@@ -46,8 +46,8 @@ export default function Index() {
   const { coffeeList } = useLoaderData<LoaderData>()
   return (
     <>
-      <section className='mx-auto w-[90vw]'>
-        <div className='mx-auto max-w-4xl '>
+      <section className='mx-auto'>
+        <div className='mx-auto'>
           <Feature />
           <h1 className='mx-center text-center pb-10'>
             Our Products

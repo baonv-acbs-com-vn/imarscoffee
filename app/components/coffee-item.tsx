@@ -12,7 +12,6 @@ export default function CoffeeItem({ description, slug, title, price, discount, 
         className='flex flex-col gap-2 no-underline'
       >
         <img className='object-fill' src={imageUrl} alt="" />
-        <div className='py-24'></div>
         <div className='p-4'>
           <h3 className=''>
             {title}

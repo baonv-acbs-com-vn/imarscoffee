@@ -15,19 +15,19 @@ import type { MdxComponent } from '~/types'
 import styles from 'highlight.js/styles/night-owl.css'
 import { getSeoMeta } from '~/utils/seo'
 
-export const meta: MetaFunction = ({ data }: { data: MdxComponent }) => {
-  const { keywords = [] } = data.frontmatter.meta ?? {}
-  const seoMeta = getSeoMeta({
-    title: data.title,
-    description: data.description,
-    twitter: {
-      description: data.description,
-      title: data.title,
-    },
-  })
+// export const meta: MetaFunction = ({ data }: { data: MdxComponent }) => {
+//   const { keywords = [] } = data.frontmatter.meta ?? {}
+//   const seoMeta = getSeoMeta({
+//     title: data.title,
+//     description: data.description,
+//     twitter: {
+//       description: data.description,
+//       title: data.title,
+//     },
+//   })
 
-  return { ...seoMeta, keywords: keywords.join(', ') }
-}
+//   return { ...seoMeta, keywords: keywords.join(', ') }
+// }
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
 
@@ -43,7 +43,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   const slug = params.slug
   invariant(typeof slug === 'string', 'Slug should be a string, and defined')
 
-  const mdxPage = await getMdxPage({ contentDirectory: 'blog', slug })
+  const mdxPage = await getMdxPage({ contentDirectory: 'item', slug })
 
   if (!mdxPage) {
     throw json(null, { status: 404 })
@@ -54,14 +54,14 @@ export const loader: LoaderFunction = async ({ params }) => {
   })
 }
 
-export default function Blog() {
+export default function Coffee() {
   const data = useLoaderData<MdxComponent>()
 
   const Component = React.useMemo(() => getMDXComponent(data.code), [data])
 
   return (
     <article className='prose prose-zinc mx-auto min-h-screen max-w-4xl pt-24 dark:prose-invert lg:prose-lg'>
-      <Component />
+     {data.slug}
     </article>
   )
 }

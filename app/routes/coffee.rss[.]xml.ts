@@ -6,9 +6,9 @@ import { getMdxListItems } from '~/utils/mdx.server'
 import { getDomainUrl } from '~/utils/misc'
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const posts = await getMdxListItems({ contentDirectory: 'blog' })
+  const posts = await getMdxListItems({ contentDirectory: 'item' })
 
-  const blogUrl = `${getDomainUrl(request)}/blog`
+  const blogUrl = `${getDomainUrl(request)}/item`
 
   const rss = `
     <rss xmlns:blogChannel="${blogUrl}" version="2.0">

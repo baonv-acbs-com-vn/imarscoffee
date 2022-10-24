@@ -28,7 +28,7 @@ export async function requiresUpdate(contentDirectory: string) {
 }
 
 
-export async function getContentList(contentDirectory = 'blog') {
+export async function getContentList(contentDirectory = 'item') {
   const contents = await db.content.findMany({
     where: { published: true, contentDirectory },
     select: {
@@ -176,14 +176,14 @@ async function upsertContentImpl({
     },
   })
 }
+
+
 async function createdContentImpl({
   contentDirectory,
   slug,
   title,
   code,
   published,
-  frontmatter,
-  timestamp,
   description,
   price,
   discount,
@@ -195,8 +195,6 @@ async function createdContentImpl({
   title: string
   code: string
   published: boolean
-  frontmatter: Record<string, unknown>
-  timestamp: Date
   description: string
   price: number
   discount: number
@@ -208,11 +206,11 @@ async function createdContentImpl({
      data: {
       contentDirectory,
       code,
-      frontmatter: JSON.stringify(frontmatter),
+      frontmatter: '',
       published,
       slug,
       title,
-      timestamp,
+      timestamp: new Date(),
       description,
       price,
       discount,
@@ -223,7 +221,7 @@ async function createdContentImpl({
 }
 
 export async function deleteSlug(slug: string) {
-  return db.content.delete({ where: { slug } })
+  await db.content.delete({where: { slug: slug } })
 }
 
 export async function refreshAllContent() {
@@ -233,6 +231,8 @@ export async function refreshAllContent() {
 export async function upsertContent(
   ...params: Parameters<typeof upsertContentImpl>
 ) {
+
+  console.log(`🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳 🏄 🐳  ${JSON.stringify(params)} _____params_____`)
   const queue = await getQueue()
 
   const result = await queue.add(() => upsertContentImpl(...params))
@@ -248,10 +248,10 @@ export async function deleteContent(slug: string) {
   return result
 }
 
-export async function createdContent(item: any) {
+export async function createdContent(...params: Parameters<typeof createdContentImpl>) {
   const queue = await getQueue()
 
-  const result = await queue.add(() => createdContentImpl(item))
+  const result = await queue.add(() => createdContentImpl(...params))
 
   return result
 }
