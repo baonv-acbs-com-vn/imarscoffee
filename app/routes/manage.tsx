@@ -26,17 +26,22 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === "EDIT") {
     // await deleteContent(values["id"]?.toString()!)
   }
+
+   // HANDLE created
+   if (action === "CREATED") {
+    // await deleteContent(values["id"]?.toString()!)
+  }
   return true;
 }
 
 type LoaderData = { items: Awaited<ReturnType<typeof getMdxListItems>> }
 
 const [seoMeta, seoLinks] = getSeo({
-  title: 'Item Manager',
-  description: 'Item Manager ',
+  title: 'Manage',
+  description: 'Manage ',
   twitter: {
-    title: 'Item Manager',
-    description: 'Item Manager',
+    title: 'Manage',
+    description: 'Manage',
   },
 })
 
@@ -61,18 +66,16 @@ export const loader: LoaderFunction = async () => {
 
   return json<LoaderData>(
     { items },
-    {
-      headers: { 'cache-control': 'private, max-age=60', Vary: 'Cookie' },
-    },
+    {  headers: { 'cache-control': 'private, max-age=60', Vary: 'Cookie' }, }
   )
 }
 
 
 
-export default function Mana() {
+export default function Manage() {
   const { items } = useLoaderData<LoaderData>()
   return (
-    <section className='mx-auto min-h-screen max-w-4xl pt-24'>
+    <section className='mx-auto min-h-screen max-w-4xl pt-4'>
       <Items items={items} />
     </section>
   )

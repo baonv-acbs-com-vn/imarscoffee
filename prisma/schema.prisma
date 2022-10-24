@@ -29,4 +29,8 @@ model Content {
   published        Boolean
   requiresUpdate   Boolean? @default(false)
   description      String   @default("")
+  price            Int      @default(0)
+  discount         Int      @default(0)
+  imageUrl         String
+  state            String   @default("none")
 }

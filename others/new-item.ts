@@ -4,31 +4,31 @@ import inquirer from 'inquirer'
 import slugify from 'lodash.kebabcase'
 
 async function go() {
-  console.log("\nLet's create a new blog 💿\n")
+  console.log("\nLet's create a new item 💿\n")
 
-  const blogsPath = path.resolve(process.cwd(), 'content', 'blog')
+  const itemsPath = path.resolve(process.cwd(), 'content', 'item')
 
-  if (!fs.existsSync(blogsPath)) {
-    fs.mkdirSync(blogsPath)
+  if (!fs.existsSync(itemsPath)) {
+    fs.mkdirSync(itemsPath)
   }
 
-  const blogs = fs
-    .readdirSync(blogsPath)
-    .map(blog => blog.replace(/(\.mdx?)?$/, ''))
+  const items = fs
+    .readdirSync(itemsPath)
+    .map(item => item.replace(/(\.mdx?)?$/, ''))
 
   const title = (
     await inquirer.prompt<{ name: string }>([
       {
         type: 'input',
         name: 'name',
-        message: 'What is the title of the blog?',
+        message: 'What is the title of the item?',
         validate: input => {
           if (!input) {
-            return 'Enter a valid name for the blog.'
+            return 'Enter a valid name for the item.'
           }
           const slug = slugify(input)
-          if (blogs.includes(slug)) {
-            return `Blog named ${input} alread exist, enter another blog name.`
+          if (items.includes(slug)) {
+            return `item named ${input} alread exist, enter another item name.`
           }
           return true
         },
@@ -47,7 +47,7 @@ async function go() {
     {
       type: 'input',
       name: 'keywords',
-      message: 'Enter the blog keywords (comma separated)',
+      message: 'Enter the item keywords (comma separated)',
       filter: (input: string) => input.trim(),
       validate: (input: string) => {
         if (input.trim().length === 0) {
@@ -59,7 +59,7 @@ async function go() {
     {
       type: 'editor',
       name: 'description',
-      message: 'Enter the blog description',
+      message: 'Enter the item description',
       filter: (input: string) => input.trim(),
       validate: (input: string) => {
         if (input.trim().length === 0) {
@@ -71,7 +71,7 @@ async function go() {
     {
       type: 'list',
       name: 'published',
-      message: 'Is the blog ready to be published?',
+      message: 'Is the item ready to be published?',
       choices: [
         { name: 'Publish', value: true },
         { name: 'Draft', value: false },
@@ -108,20 +108,20 @@ published: ${published}
   let relativePath = ''
 
   if (folder) {
-    let filePath = path.resolve(blogsPath, slug)
+    let filePath = path.resolve(itemsPath, slug)
     fs.mkdirSync(filePath)
 
     filePath = path.resolve(filePath, 'index.mdx')
     relativePath = path.relative(process.cwd(), filePath)
     fs.writeFileSync(filePath, data)
   } else {
-    const filePath = path.resolve(blogsPath, `${slug}.mdx`)
+    const filePath = path.resolve(itemsPath, `${slug}.mdx`)
     relativePath = path.relative(process.cwd(), filePath)
     fs.writeFileSync(filePath, data)
   }
 
   console.log(
-    `\nBlog created 🚀\n\`cd\` into ${relativePath}\nOpen it in you favorite text editor, and get started!\n`,
+    `\nitem created 🚀\n\`cd\` into ${relativePath}\nOpen it in you favorite text editor, and get started!\n`,
   )
 }
 

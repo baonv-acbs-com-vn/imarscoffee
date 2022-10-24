@@ -77,6 +77,10 @@ async function upsertContent(
           title: compiledPage.frontmatter.title ?? '',
           timestamp: new Date(compiledPage.frontmatter.date ?? ''),
           description: compiledPage.frontmatter.description ?? '',
+          price: compiledPage.frontmatter.price ?? 0,
+          discount: compiledPage.frontmatter.discount ?? 0,
+          imageUrl: compiledPage.frontmatter.imageUrl ?? '',
+          state: compiledPage.frontmatter.state ?? 'none',
         })
       }
       return null
@@ -176,5 +180,9 @@ export async function getMdxPage({
     timestamp: new Date(compiledPage.frontmatter.date ?? ''),
     title: compiledPage.frontmatter.title ?? '',
     description: compiledPage.frontmatter.description ?? '',
+    price: compiledPage.frontmatter.price ?? 0,
+    discount: compiledPage.frontmatter.discount ?? 0,
+    imageUrl: compiledPage.frontmatter.imageUrl ?? '',
+    state: compiledPage.frontmatter.state ?? 'none'
   }
 }

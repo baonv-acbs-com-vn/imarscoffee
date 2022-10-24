@@ -37,6 +37,10 @@ export async function getContentList(contentDirectory = 'blog') {
       timestamp: true,
       description: true,
       frontmatter: true,
+      price: true,
+      discount: true,
+      imageUrl: true,
+      state: true
     },
     orderBy: { timestamp: 'desc' },
   })
@@ -56,6 +60,10 @@ export async function getContent(slug: string) {
       title: true,
       requiresUpdate: true,
       description: true,
+      price: true,
+      discount: true,
+      imageUrl: true,
+      state: true
     },
   })
 
@@ -91,7 +99,10 @@ async function setRequiresUpdateImpl({
       contentDirectory,
       frontmatter: '',
       published: true,
-      title: '',
+      title: '',  
+      price: 0,
+      discount: 0,
+      imageUrl: ''
     },
     update: {
       requiresUpdate: true,
@@ -116,6 +127,10 @@ async function upsertContentImpl({
   frontmatter,
   timestamp,
   description,
+  price,
+  discount,
+  imageUrl,
+  state
 }: {
   contentDirectory: string
   slug: string
@@ -125,6 +140,11 @@ async function upsertContentImpl({
   frontmatter: Record<string, unknown>
   timestamp: Date
   description: string
+  price: number
+  discount: number
+  imageUrl: string
+  state: string
+
 }) {
   await db.content.upsert({
     where: { slug },
@@ -135,6 +155,10 @@ async function upsertContentImpl({
       title,
       requiresUpdate: false,
       description,
+      price,
+      discount,
+      imageUrl,
+      state
     },
     create: {
       contentDirectory,
@@ -145,7 +169,56 @@ async function upsertContentImpl({
       title,
       timestamp,
       description,
+      price,
+      discount,
+      imageUrl,
+      state
     },
+  })
+}
+async function createdContentImpl({
+  contentDirectory,
+  slug,
+  title,
+  code,
+  published,
+  frontmatter,
+  timestamp,
+  description,
+  price,
+  discount,
+  imageUrl,
+  state
+}: {
+  contentDirectory: string
+  slug: string
+  title: string
+  code: string
+  published: boolean
+  frontmatter: Record<string, unknown>
+  timestamp: Date
+  description: string
+  price: number
+  discount: number
+  imageUrl: string
+  state: string
+
+}) {
+  await db.content.create({
+     data: {
+      contentDirectory,
+      code,
+      frontmatter: JSON.stringify(frontmatter),
+      published,
+      slug,
+      title,
+      timestamp,
+      description,
+      price,
+      discount,
+      imageUrl,
+      state
+     }
   })
 }
 
@@ -174,3 +247,13 @@ export async function deleteContent(slug: string) {
 
   return result
 }
+
+export async function createdContent(item: any) {
+  const queue = await getQueue()
+
+  const result = await queue.add(() => createdContentImpl(item))
+
+  return result
+}
+
+

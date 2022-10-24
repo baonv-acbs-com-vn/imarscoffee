@@ -7,6 +7,10 @@ type MdxPage = {
   code: string
   slug: string
   frontmatter: {
+    price?: number
+    discount?: number
+    imageUrl?: string
+    state?: string
     published?: boolean
     title?: string
     description?: string

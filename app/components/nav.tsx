@@ -10,15 +10,17 @@ export default function Nav() {
         <div className='flex items-center gap-4 '>
           <NavLink to='/' className="text-2xl font-bold no-underline">iMARS_</NavLink>
           <NavLink prefetch='intent' to='/products'>
-          Products
+            Products
           </NavLink>
-          <NavLink prefetch='intent' to='/cafe'>
-            Cafe
+          <NavLink prefetch='intent' to='/coffee'>
+            Coffee
           </NavLink>
           <NavLink prefetch='intent' to='/inspirations'>
             Inspirations
           </NavLink>
-
+          <NavLink prefetch='intent' to='/manage'>
+            Manage
+          </NavLink>
         </div>
         {/*
          * Since the correct theme on the initial render is known at

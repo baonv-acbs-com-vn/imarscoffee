@@ -18,7 +18,11 @@ CREATE TABLE "Content" (
     "updatedAt" DATETIME NOT NULL,
     "published" BOOLEAN NOT NULL,
     "requiresUpdate" BOOLEAN DEFAULT false,
-    "description" TEXT NOT NULL DEFAULT ''
+    "description" TEXT NOT NULL DEFAULT '',
+    "price" INTEGER NOT NULL DEFAULT 0,
+    "discount" INTEGER NOT NULL DEFAULT 0,
+    "imageUrl" TEXT NOT NULL,
+    "state" TEXT NOT NULL DEFAULT 'none'
 );
 
 -- CreateIndex
